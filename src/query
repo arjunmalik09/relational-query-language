@@ -1,0 +1,48 @@
+create student_grade name string, percent float , id int
+insert student_grade Arjun, 95.4 , 2
+insert student_grade Janvijay, 97.6 , 3
+insert student_grade Happy, 100.0 , 4
+project student_grade with name, id
+select student_grade with ((name==Arjun) and ((percent==95.4) or (id>1)))
+select student_grade with (id>1)
+select student_grade with ((percent!=97.6) and (id>1))
+{project {select student_grade with (id>2)} with id }
+
+create student_hostel id int, hostel_name string
+insert student_hostel 4, ramanujan
+insert student_hostel 3, cvr
+insert student_hostel 2, limbdi
+{{project {select student_grade with (id>2)} with id } join student_hostel}
+{{project {select student_grade with (id>2)} with id } union {project student_hostel with id} }
+
+show table student_grade
+
+create department name string, place string , id int
+insert department cse , iitbhu, 101
+insert department ece , iitbhu, 102
+insert department eee , iitbhu, 103
+insert department cse , iitd, 101
+insert department ece , iitd, 102
+project department with name , place
+select department with (place==iitbhu)
+
+create course name string , year string , id int
+insert course maths , 2011 , 1
+insert course database , 2012 , 2
+project course with name , year 
+
+
+create student_dep id int, dep_name string
+insert student_dep 2, cse
+insert student_dep 3, cvr
+insert student_dep 4, limbdi
+
+
+{{project {select student_grade with (id>2)} with id } intersect {project student_hostel with id} }
+student_hostel product student_dep
+student_hostel intersect student_dep
+student_hostel join student_dep
+student_hostel difference student_dep
+student_hostel union student_dep
+
+rename student_grade to s_grade with name, percentage, id

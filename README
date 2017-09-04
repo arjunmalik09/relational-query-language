@@ -1,0 +1,56 @@
+1) About:
+Relational Query Language (RQL) implements Relational Algebra operations on relational tables. It is a kind of a naive version of SQL supporting some standard commands given in section 4.
+
+
+2) Compiling:
+(ensure that source code directory is writable)
+Run the following commands from src folder:
+	g++ -std=c++11 -c relation.cpp database.cpp parse.cpp
+	g++ parse.o relation.o database.o main.cpp -o rql
+OR
+Run compile.sh
+
+3) Run:
+Run rql file from src folder.
+
+4) Standard Statements:
+
+create  tablename column_name1 datatype1, column_name2 datatype2,.....,  column_nameN datatypeN
+
+insert tablename column_name1_value, column_name2_value,.....,  column_nameN_value
+
+project tablename with column_name1 , column_name2 ,.....,  column_nameM 
+
+select tablename with condition
+(where condition is fully bracketed.
+operands supported: ==,!=,>,<
+predicates can be joined using "and" or "or".
+)
+
+rename old_tablename to new_tablename with column_name1 , column_name2 ,.....,  column_nameN 
+
+tablename1 product tablename2
+
+tablename1 join tablename2
+
+tablename1 union tablename2
+
+tablename1 intersect tablename2
+
+tablename1 difference tablename2
+
+input filename
+(read commands from filename
+sample: run "input query"
+)
+
+show table tablename 
+
+Nested query:
+Combine standard queries(except create,insert,input,show table) using braces(should be completely bracketed).
+Example:{{project {select student_grade with (id>2)} with id } intersect {project student_hostel with id} }
+
+5) File Structure:
+Folder db contains files for database tables.
+Folder headers contains header files made.
+Folder src contains c++ files for implementation of header files and main.cpp. It also contains sample query file.
